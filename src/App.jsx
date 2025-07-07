@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <div className='container'>
-        This is just some data
+        
       </div>
     </>
   )
