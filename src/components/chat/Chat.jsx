@@ -31,7 +31,63 @@ export default function Chat() {
                         <img src="./info.png" alt="" />
                     </div>
                 </div>
-                <div className="center"></div>
+                <div className="center">
+                    <div className="message">
+                        <img src="./avatar.png" alt="" />
+                        <div className="texts">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Iure id beatae laborum minima
+                                quaerat ratione doloremque recusandae voluptates
+                                velit explicabo blanditiis eos dolorem, suscipit
+                                sit amet molestias optio dignissimos saepe.
+                            </p>
+                            <span>1 min ago</span>
+                        </div>
+                    </div>
+                    <div className="message own">
+                        <div className="texts">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Iure id beatae laborum minima
+                                quaerat ratione doloremque recusandae voluptates
+                                velit explicabo blanditiis eos dolorem, suscipit
+                                sit amet molestias optio dignissimos saepe.
+                            </p>
+                            <span>1 min ago</span>
+                        </div>
+                    </div>{" "}
+                    <div className="message">
+                        <img src="./avatar.png" alt="" />
+
+                        <div className="texts">
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Iure id beatae laborum minima
+                                quaerat ratione doloremque recusandae voluptates
+                                velit explicabo blanditiis eos dolorem, suscipit
+                                sit amet molestias optio dignissimos saepe.
+                            </p>
+                            <span>1 min ago</span>
+                        </div>
+                    </div>{" "}
+                    <div className="message own">
+                        <div className="texts">
+                            <img
+                                src="https://images.unsplash.com/photo-1504194104404-433180773017?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                alt=""
+                            />
+                            <p>
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Iure id beatae laborum minima
+                                quaerat ratione doloremque recusandae voluptates
+                                velit explicabo blanditiis eos dolorem, suscipit
+                                sit amet molestias optio dignissimos saepe.
+                            </p>
+                            <span>1 min ago</span>
+                        </div>
+                    </div>
+                </div>
                 <div className="bottom">
                     <div className="icons">
                         <img src="./img.png" alt="" />
