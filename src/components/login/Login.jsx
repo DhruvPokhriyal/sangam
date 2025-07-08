@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "./login.css";
+import { toast } from "react-toastify";
 
 export default function Login() {
     const [avatar, setAvatar] = useState({
@@ -7,12 +8,17 @@ export default function Login() {
         url: "",
     });
 
-    function handleAvatar(e) {
+    const handleAvatar = useCallback(function handleAvatar(e) {
         if (e.target.files[0])
             setAvatar({
                 file: e.target.files[0],
                 url: URL.createObjectURL(e.target.files[0]),
             });
+    }, []);
+
+    function handleLogin(e) {
+        e.preventDefault();
+        toast.success("Hello");
     }
 
     return (
@@ -20,7 +26,7 @@ export default function Login() {
             <div className="login">
                 <div className="item">
                     <h2>Welcome back,</h2>
-                    <form>
+                    <form onSubmit={handleLogin}>
                         <input
                             type="email"
                             name="email"
