@@ -39,7 +39,7 @@ export default function ChatList() {
                     <p>Hello</p>
                 </div>
             </div>
-            <AddUser></AddUser>
+            {addMode && <AddUser></AddUser>}
         </div>
     );
 }
