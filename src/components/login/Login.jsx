@@ -1,8 +1,10 @@
 import { useCallback, useState } from "react";
 import "./login.css";
 import { toast } from "react-toastify";
+import { useAuth } from "../../hooks/useAuth";
 
 export default function Login() {
+    const { user, signup, login } = useAuth();
     const [avatar, setAvatar] = useState({
         file: null,
         url: "",
@@ -21,10 +23,17 @@ export default function Login() {
         toast.success("Hello");
     }
 
-    function handleRegister(e) {
+    async function handleRegister(e) {
         e.preventDefault();
-        const formData = new FormData();
+        const formData = new FormData(e.target);
         const { username, email, password } = Object.fromEntries(formData);
+        try {
+            await signup(email, password);
+        } catch (err) {
+            toast.error(err.message);
+            console.log(err);
+            console.log(err.message);
+        }
     }
 
     return (
