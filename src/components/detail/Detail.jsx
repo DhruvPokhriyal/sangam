@@ -1,6 +1,13 @@
+import { useAuth } from "../../hooks/useAuth";
 import "./detail.css";
 
 export default function Detail() {
+    const { user, logout } = useAuth();
+
+    function handleLogout() {
+        logout();
+    }
+
     return (
         <>
             <div className="detail">
@@ -97,7 +104,9 @@ export default function Detail() {
                         </div>
                     </div>
                     <button className="">Block User</button>
-                    <button className="logout">Logout</button>
+                    <button className="logout" onClick={handleLogout}>
+                        Logout
+                    </button>
                 </div>
             </div>
         </>
