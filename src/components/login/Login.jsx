@@ -21,6 +21,12 @@ export default function Login() {
         toast.success("Hello");
     }
 
+    function handleRegister(e) {
+        e.preventDefault();
+        const formData = new FormData();
+        const { username, email, password } = Object.fromEntries(formData);
+    }
+
     return (
         <>
             <div className="login">
@@ -45,7 +51,7 @@ export default function Login() {
                 <div className="separator"></div>
                 <div className="item">
                     <h2>Create an account</h2>
-                    <form>
+                    <form onSubmit={handleRegister}>
                         <label htmlFor="file">
                             <img src={avatar.url || "./avatar.png"} alt="" />
                             Upload an image
