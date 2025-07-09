@@ -1,10 +1,14 @@
 import { useCallback, useState } from "react";
 import "./login.css";
 import { toast } from "react-toastify";
+import { db, storage } from "../../lib/firebase";
 import { useAuth } from "../../hooks/useAuth";
+import { doc, setDoc } from "firebase/firestore";
+import uploadAvatar from "../../utils/upload";
 
 export default function Login() {
     const { user, signup, login } = useAuth();
+    const [loading, setLoading] = useState(false);
     const [avatar, setAvatar] = useState({
         file: null,
         url: "",
@@ -18,21 +22,52 @@ export default function Login() {
             });
     }, []);
 
-    function handleLogin(e) {
+    async function handleLogin(e) {
         e.preventDefault();
-        toast.success("Hello");
+        setLoading(true);
+        const formData = new FormData(e.target);
+        const { email, password } = Object.fromEntries(formData);
+        try {
+            await login(email, password);
+        } catch (error) {
+            console.log(error.code);
+            if (error.code === "auth/invalid-credential") {
+                toast.error("Invalid Credentials. Please try again.");
+            } else {
+                toast.error("Something went wrong. Please try again later.");
+            }
+        } finally {
+            setLoading(false);
+        }
     }
 
     async function handleRegister(e) {
         e.preventDefault();
+        setLoading(true);
         const formData = new FormData(e.target);
         const { username, email, password } = Object.fromEntries(formData);
         try {
-            await signup(email, password);
+            const res = await signup(email, password);
+            const imgUrl = await uploadAvatar(avatar.file);
+            await setDoc(doc(db, "users", res.user.uid), {
+                username,
+                email,
+                avatar: imgUrl,
+                id: res.user.uid,
+                blocked: [],
+            });
+
+            await setDoc(doc(db, "userChats", res.user.uid), {
+                chats: [],
+            });
+
+            toast.success("Account created! You can login now!");
         } catch (err) {
             toast.error(err.message);
             console.log(err);
             console.log(err.message);
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -54,21 +89,21 @@ export default function Login() {
                             id=""
                             placeholder="Password"
                         />
-                        <button>Sign In</button>
+                        <button disabled={loading}>Sign In</button>
                     </form>
                 </div>
                 <div className="separator"></div>
                 <div className="item">
                     <h2>Create an account</h2>
                     <form onSubmit={handleRegister}>
-                        <label htmlFor="file">
+                        <label htmlFor="avatar">
                             <img src={avatar.url || "./avatar.png"} alt="" />
                             Upload an image
                         </label>
                         <input
                             type="file"
-                            name="file"
-                            id="file"
+                            name="avatar"
+                            id="avatar"
                             style={{ display: "none" }}
                             onChange={handleAvatar}
                         />
@@ -89,7 +124,7 @@ export default function Login() {
                             id=""
                             placeholder="Password"
                         />
-                        <button>Sign Up</button>
+                        <button disabled={loading}>Sign Up</button>
                     </form>
                 </div>
             </div>

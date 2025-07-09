@@ -2,7 +2,7 @@ import { useAuth } from "../../hooks/useAuth";
 import "./detail.css";
 
 export default function Detail() {
-    const { user, logout } = useAuth();
+    const { logout } = useAuth();
 
     function handleLogout() {
         logout();
