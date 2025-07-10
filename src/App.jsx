@@ -13,7 +13,6 @@ function App() {
             <div className="container">
                 {user ? (
                     <>
-                        {" "}
                         <List></List>
                         <Chat></Chat>
                         <Detail></Detail>
