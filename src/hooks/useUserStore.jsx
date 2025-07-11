@@ -8,9 +8,10 @@ import { db } from "../lib/firebase";
 
 export const useUserStore = create((set, get) => ({
     user: null,
-    loading: false,
+    loading: true,
     // error: null,
     fetchUserInfo: async (uid) => {
+        set({ loading: true });
         try {
             const userRef = doc(db, "users", uid);
             const userDoc = await getDoc(userRef);
@@ -27,6 +28,7 @@ export const useUserStore = create((set, get) => ({
         }
     },  
     signup: async (email, password) => {
+        set({ loading: true });
         try {
             await createUserWithEmailAndPassword(auth, email, password);
          
@@ -39,6 +41,7 @@ export const useUserStore = create((set, get) => ({
         }
     },
     login: async (email, password) => {
+        set({ loading: true });
         try {
             await signInWithEmailAndPassword(auth, email, password);
           
@@ -51,6 +54,7 @@ export const useUserStore = create((set, get) => ({
         }
     },
     logout: async () => {
+        set({ loading: true });
         try {
             await signOut(auth);
             set({ user: null, loading: false });
