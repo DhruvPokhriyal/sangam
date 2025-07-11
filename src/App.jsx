@@ -6,7 +6,7 @@ import Notification from "./components/notification/Notification";
 import { useAuth } from "./hooks/useAuth";
 
 function App() {
-    const { user } = useAuth();
+    const { user, loading } = useAuth();
 
     return (
         <>
