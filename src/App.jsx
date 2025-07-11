@@ -8,6 +8,10 @@ import { useAuth } from "./hooks/useAuth";
 function App() {
     const { user, loading } = useAuth();
 
+    if (loading) {
+        return <div className="loading">Loading...</div>;
+    }
+
     return (
         <>
             <div className="container">
