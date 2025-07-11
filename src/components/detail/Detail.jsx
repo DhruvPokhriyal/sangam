@@ -2,7 +2,7 @@ import { useAuth } from "../../hooks/useAuth";
 import "./detail.css";
 
 export default function Detail() {
-    const { logout } = useAuth();
+    const { user, logout } = useAuth();
 
     function handleLogout() {
         logout();
@@ -12,9 +12,9 @@ export default function Detail() {
         <>
             <div className="detail">
                 <div className="user">
-                    <img src="./avatar.png" alt="" />
-                    <h2>John Doe</h2>
-                    <p>Lorem ipsum dolor sit amet.</p>
+                    <img src={user.avatar || "./avatar.png"} alt="" />
+                    <h2>{user.username}</h2>
+                    <p>{user.bio || "Lorem ipsum dolor sit amet."}</p>
                 </div>
                 <div className="info">
                     <div className="option">
