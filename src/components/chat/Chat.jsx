@@ -96,10 +96,10 @@ export default function Chat() {
             <div className="chat">
                 <div className="top">
                     <div className="user">
-                        <img src="./avatar.png" alt="" />
+                        <img src={receiver.avatar || "./avatar.png"} alt="" />
                         <div className="texts">
-                            <span>John Doe</span>
-                            <p>Lorem ipsum dolor sit amet.</p>
+                            <span>{receiver.username}</span>
+                            <p>{receiver.bio || "Lorem ipsum dolor sit amet."}</p>
                         </div>
                     </div>
                     <div className="icons">
