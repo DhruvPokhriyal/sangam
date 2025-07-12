@@ -50,7 +50,9 @@ export default function ChatList() {
       
         {
             chats && chats.map((chat) => (
-                <div className="item" key={chat.chatId} onClick={() => handleSelect(chat)}>
+                <div className="item" key={chat.chatId} onClick={() => handleSelect(chat)} style={{
+                    backgroundColor: chat  && chat.isSeen ? "transparent" : "#5183f5"
+                }}>
                     <img src={chat.user.avatar || "./avatar.png"} alt="" />
                     <div className="texts">
                         <span>{chat.user.username}</span>
