@@ -1,13 +1,13 @@
 import { useCallback, useState } from "react";
 import "./login.css";
 import { toast } from "react-toastify";
-import { db, storage } from "../../lib/firebase";
+// import { db, storage } from "../../lib/firebase";
 import { useAuth } from "../../hooks/useAuth";
-import { doc, setDoc } from "firebase/firestore";
+// import { doc, setDoc } from "firebase/firestore";
 import uploadAvatar from "../../utils/upload";
 
 export default function Login() {
-    const { user, signup, login } = useAuth();
+    const { signup, login } = useAuth();
     const [loading, setLoading] = useState(false);
     const [avatar, setAvatar] = useState({
         file: null,
@@ -47,21 +47,8 @@ export default function Login() {
         const formData = new FormData(e.target);
         const { username, email, password } = Object.fromEntries(formData);
         try {
-            const res = await signup(email, password);
-            const imgUrl = await uploadAvatar(avatar.file);
-            await setDoc(doc(db, "users", res.user.uid), {
-                username,
-                email,
-                avatar: imgUrl,
-                id: res.user.uid,
-                blocked: [],
-            });
-
-            await setDoc(doc(db, "userChats", res.user.uid), {
-                chats: [],
-            });
-
-            toast.success("Account created! You can login now!");
+            const imgUrl = avatar.file ? await uploadAvatar(avatar.file) : "./avatar.png";
+            await signup(email, password, { username, avatar: imgUrl });
         } catch (err) {
             toast.error(err.message);
             console.log(err);
