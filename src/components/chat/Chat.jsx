@@ -112,7 +112,7 @@ export default function Chat() {
                     {chat &&
                         chat.messages.map((message) => (
                             <div
-                                className={`message own`}
+                                className={`message ${message.senderId === user.id ? "own" : ""}`}
                                 key={message.createdAt}
                             >
                                 <div className="texts">
@@ -123,6 +123,15 @@ export default function Chat() {
                                 </div>
                             </div>
                         ))}
+                        {
+                        img.url && (
+                            <div className="message own">
+                                <div className="texts">
+                                    <img src={img.url} alt="" />
+                                </div>
+                            </div>
+                        )                             
+                        }
 
                     {/* <div className="message own">
                         <div className="texts">
