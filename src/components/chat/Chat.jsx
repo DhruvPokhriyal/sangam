@@ -65,7 +65,7 @@ export default function Chat() {
                     });
                 }
             })
-
+            setText("");
           
         } catch (error) {
             console.log(error);
