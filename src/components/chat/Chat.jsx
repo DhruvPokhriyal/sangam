@@ -6,11 +6,16 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { useChatStore } from "../../hooks/useChatStore";
 import { useAuth } from "../../hooks/useAuth";
 import { updateDoc, getDoc, arrayUnion } from "firebase/firestore";
-
+import uploadAvatar from "../../utils/upload";
+ 
 export default function Chat() {
     const [chat, setChat] = useState(null);
     const [open, setOpen] = useState(false);
     const [text, setText] = useState("");
+    const [img, setImg] = useState({
+        file: null,
+        url: "",
+    });
     const endRef = useRef(null);
     const { user } = useAuth();
     const { chatId, receiver } = useChatStore();
@@ -31,18 +36,28 @@ export default function Chat() {
         setText((prev) => prev + e.emoji);
     }, []);
 
-    // function handleEmoji(e) {}
-
-    console.log(text);
+    const handleImage = (e) => {
+        const file = e.target.files[0];
+        setImg({
+            file,
+            url: URL.createObjectURL(file),
+        })
+    }
 
     async function handleSend() {
         if (!text.trim()) return;
+        let imgUrl = null;
+        
         try {
+            if (img.file) {
+                imgUrl = await uploadAvatar(img.file);
+            }
             await updateDoc(doc(db, "chats", chatId), {
                 messages: arrayUnion({
                     senderId: user.id,
                     text,
                     createdAt: new Date(),
+                    ...(imgUrl && { img: imgUrl }),
                 }),
             });
 
@@ -66,6 +81,10 @@ export default function Chat() {
                 }
             })
             setText("");
+            setImg({
+                file: null,
+                url: "",
+            });
           
         } catch (error) {
             console.log(error);
@@ -125,7 +144,11 @@ export default function Chat() {
                 </div>
                 <div className="bottom">
                     <div className="icons">
-                        <img src="./img.png" alt="" />
+
+                        <label htmlFor="img" className="cursor-pointer">
+                            <img src="./img.png" alt="" />
+                            <input type="file" id="img" onChange={handleImage} style={{ display: "none" }} />
+                        </label>
                         <img src="./camera.png" alt="" />
                         <img src="./mic.png" alt="" />
                     </div>
