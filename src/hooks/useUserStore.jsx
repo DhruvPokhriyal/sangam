@@ -18,7 +18,7 @@ export const useUserStore = create((set, get) => ({
             if (userDoc.exists()) {
                 set({ user: userDoc.data(), loading: false });
             } else {
-                set({ user: null, loading: false });
+                
                 throw new Error("User not found");
             }
         } catch (error) {
@@ -30,7 +30,7 @@ export const useUserStore = create((set, get) => ({
     signup: async (email, password) => {
         set({ loading: true });
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            return await createUserWithEmailAndPassword(auth, email, password);
          
         } catch (error) {
             console.error(error);
