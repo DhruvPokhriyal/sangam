@@ -4,10 +4,11 @@ import Detail from "./components/detail/Detail";
 import Login from "./components/login/Login";
 import Notification from "./components/notification/Notification";
 import { useAuth } from "./hooks/useAuth";
-
+import { useChatStore } from "./hooks/useChatStore";
 function App() {
     const { user, loading } = useAuth();
-
+    const { chatId, receiver } = useChatStore();
+    console.log(chatId, receiver);
     if (loading) {
         return <div className="loading">Loading...</div>;
     }
@@ -18,8 +19,16 @@ function App() {
                 {user ? (
                     <>
                         <List></List>
-                        <Chat></Chat>
-                        <Detail></Detail>
+                        {
+                            chatId && receiver && (
+                            <>
+                               <Chat></Chat>
+                               <Detail></Detail>
+                            </>
+                             
+                            )
+                        }
+                       
                     </>
                 ) : (
                     <Login></Login>
