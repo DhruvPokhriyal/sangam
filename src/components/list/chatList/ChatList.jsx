@@ -54,7 +54,7 @@ export default function ChatList() {
                     <img src={chat.user.avatar || "./avatar.png"} alt="" />
                     <div className="texts">
                         <span>{chat.user.username}</span>
-                        <p>{chat.lastMessage?.text}</p>
+                        <p>{chat.lastMessage}</p>
                     </div>
                 </div>
             ))
