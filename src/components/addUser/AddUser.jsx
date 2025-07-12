@@ -1,11 +1,13 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, doc, getDocs, query, setDoc, where, serverTimestamp, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 import "./addUser.css";
 import { useState } from "react";
+import { useUserStore } from "../../hooks/useUserStore";
 
 export default function AddUser() {
+    const {user : receiver} = useUserStore();
     const [users, setUsers] = useState([]);
-    const [empty, setEmpty] = useState(false);
+  
 
     async function handleSearch(e) {
         e.preventDefault();
@@ -19,8 +21,42 @@ export default function AddUser() {
             if (!querySnapshot.empty) {
                 setUsers(querySnapshot.docs.map((doc) => doc.data()));
             } else {
-                setEmpty(true);
+                setUsers([]);
             }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function handleAddUser(user) {
+
+        const chatRef = collection(db, "chats");
+        const userChatRef = collection(db, "userChats");
+
+        console.log(user);
+        try {
+            const newChatRef = doc(chatRef);
+            await setDoc(newChatRef, {
+                createdAt: serverTimestamp(),
+                messages: [], 
+            })
+            await updateDoc(doc(userChatRef, user.id),{
+                chats: arrayUnion({
+                    chatId: newChatRef.id,
+                    lastMessage: "",
+                    receiverId: receiver.id,
+                    updatedAt: Date.now(),
+                }),
+            })
+            await updateDoc(doc(userChatRef, receiver.id),{
+                chats: arrayUnion({
+                    chatId: newChatRef.id,
+                    lastMessage: "",
+                    receiverId: user.id,
+                    updatedAt: Date.now(),
+                }),
+            }) 
+            console.log(newChatRef); 
         } catch (error) {
             console.log(error);
         }
@@ -33,14 +69,14 @@ export default function AddUser() {
                     <input type="text" placeholder="Username" name="username" />
                     <button>Search</button>
                 </form>
-                {empty && <p>No users found</p>}
-                {!empty && users.map((user) => (
+                {users.length === 0 && <p>No users found</p>}
+                {users.length > 0 && users.map((user) => (
                     <div className="user" key={user.id}>
                         <div className="detail">
                             <img src={user.avatar || "./avatar.png"} alt="" />
                             <span>{user.username}</span>
                         </div>
-                        <button>Add User</button>
+                        <button type="button" onClick={() => handleAddUser(user)}>Add User</button>
                     </div>
                 ))}
             </div>
