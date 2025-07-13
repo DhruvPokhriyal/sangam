@@ -93,7 +93,7 @@ export default function ChatList() {
                 </div>
             ))
         }
-            {addMode && <AddUser></AddUser>}
+            {addMode && <AddUser setAddMode={setAddMode}></AddUser>}
         </div>
     );
 }

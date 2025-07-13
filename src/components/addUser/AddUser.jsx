@@ -3,8 +3,9 @@ import { db } from "../../lib/firebase";
 import "./addUser.css";
 import { useState } from "react";
 import { useUserStore } from "../../hooks/useUserStore";
+import { toast } from "react-toastify";
 
-export default function AddUser() {
+export default function AddUser({setAddMode}) {
     const {user : receiver} = useUserStore();
     const [users, setUsers] = useState([]);
   
@@ -56,9 +57,10 @@ export default function AddUser() {
                     updatedAt: Date.now(),
                 }),
             }) 
-            console.log(newChatRef); 
+            toast.success("User added successfully");
+            setAddMode(false);
         } catch (error) {
-            console.log(error);
+            toast.error(error.message);
         }
     }
 
