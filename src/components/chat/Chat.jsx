@@ -103,8 +103,8 @@ export default function Chat() {
                         </div>
                     </div>
                     <div className="icons">
-                        <img src="./phone.png" alt="" />
-                        <img src="./video.png" alt="" />
+                        {/* <img src="./phone.png" alt="" />
+                        <img src="./video.png" alt="" /> */}
                         <img src="./info.png" alt="" />
                     </div>
                 </div>
@@ -158,8 +158,8 @@ export default function Chat() {
                             <img src="./img.png" alt="" />
                             <input type="file" id="img" onChange={handleImage} style={{ display: "none" }} />
                         </label>
-                        <img src="./camera.png" alt="" />
-                        <img src="./mic.png" alt="" />
+                        {/* <img src="./camera.png" alt="" />
+                        <img src="./mic.png" alt="" /> */}
                     </div>
                     <input
                         type="text"

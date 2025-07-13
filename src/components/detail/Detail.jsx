@@ -48,13 +48,13 @@ export default function Detail() {
                             <img src="./arrowUp.png" alt="" />
                         </div>
                     </div>
-                    <div className="option">
+                    {/* <div className="option">
                         <div className="title">
                             <span>Privacy & help</span>
                             <img src="./arrowUp.png" alt="" />
                         </div>
-                    </div>
-                    <div className="option">
+                    </div> */}
+                    {/* <div className="option">
                         <div className="title">
                             <span>Shared photos</span>
                             <img src="./arrowUp.png" alt="" />
@@ -121,13 +121,13 @@ export default function Detail() {
                                 />
                             </div>
                         </div>
-                    </div>
-                    <div className="option">
+                    </div> */}
+                    {/* <div className="option">
                         <div className="title">
                             <span>Shared Files</span>
                             <img src="./arrowUp.png" alt="" />
                         </div>
-                    </div>
+                    </div> */}
                     <button className="" onClick={handleBlock}>{isReceiverBlocked ? "Unblock User" : "Block User"}</button>
                     <button className="logout" onClick={handleLogout}>
                         Logout
