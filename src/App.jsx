@@ -12,6 +12,20 @@ function App() {
     const { user, loading } = useAuth();
     const { chatId, receiver } = useChatStore();
     const [mobileView, setMobileView] = useState('list');
+    const [isDesktopDetailsOpen, setIsDesktopDetailsOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
+    
+    // Detect mobile vs desktop
+    useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth < 1024); // lg breakpoint
+        };
+        
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
     
     // Reset mobile view when chat changes
     useEffect(() => {
@@ -19,6 +33,44 @@ function App() {
             setMobileView('chat');
         }
     }, [chatId, receiver]);
+
+    // Handle desktop details toggle
+    const handleDesktopDetailsToggle = () => {
+        setIsDesktopDetailsOpen(prev => !prev);
+    };
+
+    // Handle mobile detail navigation
+    const handleMobileDetailToggle = () => {
+        setMobileView('detail');
+    };
+
+    // Handle detail close (mobile)
+    const handleDetailClose = () => {
+        setMobileView('chat');
+    };
+
+    // Reset desktop details when switching to mobile
+    useEffect(() => {
+        if (isMobile) {
+            setIsDesktopDetailsOpen(false);
+        }
+    }, [isMobile]);
+
+    // Handle keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (event) => {
+            if (event.key === 'Escape') {
+                if (isMobile && mobileView === 'detail') {
+                    handleDetailClose();
+                } else if (!isMobile && isDesktopDetailsOpen) {
+                    setIsDesktopDetailsOpen(false);
+                }
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => document.removeEventListener('keydown', handleKeyDown);
+    }, [isMobile, mobileView, isDesktopDetailsOpen]);
     
     if (loading) {
         return (
@@ -50,13 +102,47 @@ function App() {
                             {chatId && receiver && (
                                 <>
                                     <Chat 
-                                        className={`${mobileView === 'chat' ? 'flex' : 'hidden'} md:flex md:flex-1 flex-col`}
-                                        onDetailToggle={() => setMobileView('detail')}
+                                        className={`${mobileView === 'chat' ? 'flex' : 'hidden'} md:flex md:flex-1 flex-col transition-all duration-300 ease-in-out ${
+                                            !isMobile && isDesktopDetailsOpen ? 'lg:mr-80' : 'lg:mr-0'
+                                        }`}
+                                        onDetailToggle={isMobile ? handleMobileDetailToggle : handleDesktopDetailsToggle}
+                                        isDesktopDetailsOpen={isDesktopDetailsOpen}
+                                        isMobile={isMobile}
                                     />
-                                    <Detail 
-                                        className={`${mobileView === 'detail' ? 'flex' : 'hidden'} lg:flex lg:w-80 lg:flex-shrink-0 flex-col`}
-                                        onClose={() => setMobileView('chat')}
-                                    />
+                                    
+                                    {/* Mobile Detail Modal */}
+                                    {isMobile && (
+                                        <div className={`
+                                            fixed inset-0 z-50 bg-slate-900/75 backdrop-blur-lg backdrop-saturate-180 
+                                            transition-transform duration-300 ease-in-out lg:hidden
+                                            ${mobileView === 'detail' ? 'translate-x-0' : 'translate-x-full'}
+                                        `}>
+                                            <Detail 
+                                                className="flex flex-col w-full h-full"
+                                                onClose={handleDetailClose}
+                                                isMobile={true}
+                                            />
+                                        </div>
+                                    )}
+                                    
+                                    {/* Desktop Detail Sidebar */}
+                                    {!isMobile && (
+                                        <aside 
+                                            className={`
+                                                fixed top-0 right-0 h-full w-80 z-40 bg-slate-900/75 backdrop-blur-lg backdrop-saturate-180 
+                                                border-l border-white/[0.125] transition-transform duration-300 ease-in-out
+                                                ${isDesktopDetailsOpen ? 'translate-x-0' : 'translate-x-full'}
+                                            `}
+                                            aria-hidden={!isDesktopDetailsOpen}
+                                            role="complementary"
+                                        >
+                                            <Detail 
+                                                className="flex flex-col w-full h-full"
+                                                onClose={() => setIsDesktopDetailsOpen(false)}
+                                                isMobile={false}
+                                            />
+                                        </aside>
+                                    )}
                                 </>
                             )}
                         </main>
