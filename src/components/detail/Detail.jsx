@@ -82,41 +82,41 @@ export default function Detail({ className = "", onClose }) {
                 <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-5 lg:space-y-6">
                     {/* Options */}
                     <div className="space-y-3 sm:space-y-4">
-                        <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
+                        {/* <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
                             <div className="flex items-center justify-between">
                                 <span className="text-sm sm:text-base text-white">Chat Settings</span>
                                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
                                 </svg>
                             </div>
-                        </div>
+                        </div> */}
                         
-                        <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
+                        {/* <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
                             <div className="flex items-center justify-between">
                                 <span className="text-sm sm:text-base text-white">Privacy & Safety</span>
                                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
                                 </svg>
                             </div>
-                        </div>
+                        </div> */}
                         
-                        <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
+                        {/* <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
                             <div className="flex items-center justify-between">
                                 <span className="text-sm sm:text-base text-white">Shared Photos</span>
                                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
                                 </svg>
                             </div>
-                        </div>
+                        </div> */}
                         
-                        <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
+                        {/* <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
                             <div className="flex items-center justify-between">
                                 <span className="text-sm sm:text-base text-white">Shared Files</span>
                                 <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
                                     <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
                                 </svg>
                             </div>
-                        </div>
+                        </div> */}
                         
                         {/* Language Selection */}
                         <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
