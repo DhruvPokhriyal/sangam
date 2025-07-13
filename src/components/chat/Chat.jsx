@@ -18,7 +18,7 @@ export default function Chat() {
     });
     const endRef = useRef(null);
     const { user } = useAuth();
-    const { chatId, receiver } = useChatStore();
+    const { chatId, receiver, isCurrentUserBlocked, isReceiverBlocked } = useChatStore();
     console.log(chatId, receiver);
     useEffect(() => {
         endRef.current.scrollIntoView({ behavior: "smooth" });
@@ -45,7 +45,7 @@ export default function Chat() {
     }
 
     async function handleSend() {
-        if (!text.trim()) return;
+        if (!text.trim() || !receiver || isCurrentUserBlocked || isReceiverBlocked) return;
         let imgUrl = null;
         
         try {
@@ -96,10 +96,10 @@ export default function Chat() {
             <div className="chat">
                 <div className="top">
                     <div className="user">
-                        <img src={receiver.avatar || "./avatar.png"} alt="" />
+                        <img src={receiver?.avatar || "./avatar.png"} alt="" />
                         <div className="texts">
-                            <span>{receiver.username}</span>
-                            <p>{receiver.bio || "Lorem ipsum dolor sit amet."}</p>
+                            <span>{receiver?.username || "Unknown User"}</span>
+                            <p>{receiver?.bio || "Lorem ipsum dolor sit amet."}</p>
                         </div>
                     </div>
                     <div className="icons">
@@ -163,7 +163,8 @@ export default function Chat() {
                     </div>
                     <input
                         type="text"
-                        placeholder="Type a message..."
+                        placeholder={isCurrentUserBlocked || isReceiverBlocked ? "You cannot send messages to this user" : "Type a message..."}
+                        disabled={isCurrentUserBlocked || isReceiverBlocked}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
                     />
@@ -180,7 +181,7 @@ export default function Chat() {
                             ></EmojiPicker>
                         </div>
                     </div>
-                    <button className="sendButton" onClick={handleSend}>
+                    <button className="sendButton" onClick={handleSend} disabled={isCurrentUserBlocked || isReceiverBlocked}>
                         Send
                     </button>
                 </div>
