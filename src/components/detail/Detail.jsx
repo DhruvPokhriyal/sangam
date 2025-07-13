@@ -49,8 +49,9 @@ export default function Detail({ className = "", onClose }) {
 
     return (
         <>
-            <div className={`${className} flex-1`}>
-                <div className="py-6 sm:py-8 px-4 sm:px-5 lg:px-6 flex flex-col items-center gap-3 sm:gap-4 border-b border-gray-300/10 relative">
+            <div className={`${className} bg-slate-800/30 h-full flex flex-col overflow-hidden`}>
+                {/* Header - Fixed */}
+                <div className="flex-shrink-0 py-6 sm:py-8 px-4 sm:px-5 lg:px-6 flex flex-col items-center gap-3 sm:gap-4 border-b border-gray-300/10 relative">
                     {/* Mobile close button */}
                     <button 
                         onClick={onClose}
@@ -69,60 +70,125 @@ export default function Detail({ className = "", onClose }) {
                             className="w-full h-full object-cover"
                         />
                     </div>
-                    <div className="text-center space-y-2">
-                        <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white truncate max-w-48 sm:max-w-64">
-                            {isCurrentUserBlocked || isReceiverBlocked ? "Unknown User" : receiver?.username || "Unknown User"}
-                        </h2>
-                        <p className="text-sm sm:text-base text-gray-400 max-w-64 sm:max-w-80 mx-auto leading-relaxed">
-                            {isCurrentUserBlocked || isReceiverBlocked ? "Bio not available" : receiver?.bio || "Lorem ipsum dolor sit amet."}
-                        </p>
-                    </div>
+                    <h2 className="text-lg sm:text-xl lg:text-2xl font-bold text-white text-center">
+                        {isCurrentUserBlocked || isReceiverBlocked ? "Unknown User" : receiver?.username || "Unknown User"}
+                    </h2>
+                    <p className="text-sm sm:text-base text-gray-400 text-center">
+                        {isCurrentUserBlocked || isReceiverBlocked ? "Bio not available" : receiver?.bio || "Lorem ipsum dolor sit amet."}
+                    </p>
                 </div>
-                
-                <div className="p-4 sm:p-5 lg:p-6 flex flex-col gap-6 sm:gap-8">
-                    <button 
-                        onClick={handleBlock}
-                        className="w-full py-3 sm:py-4 px-4 sm:px-5 bg-rose-500/55 hover:bg-rose-600/80 text-white text-sm sm:text-base font-medium rounded-lg transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-rose-500/50 focus:ring-offset-2 focus:ring-offset-slate-900"
-                    >
-                        {isReceiverBlocked ? "Unblock User" : "Block User"}
-                    </button>
-                    
+
+                {/* Scrollable Content Area */}
+                <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5 lg:p-6 space-y-4 sm:space-y-5 lg:space-y-6">
+                    {/* Options */}
                     <div className="space-y-3 sm:space-y-4">
-                        <label 
-                            htmlFor="language" 
-                            className="block text-sm sm:text-base font-medium text-white"
-                        >
-                            Change Language:
-                        </label>
-                        <select 
-                            id="language" 
-                            name="language" 
-                            value={user.language} 
-                            onChange={handleLanguageChange}
-                            className="w-full py-2.5 sm:py-3 px-3 sm:px-4 bg-slate-800/60 border border-slate-600/50 rounded-lg text-sm sm:text-base text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:bg-slate-800/80 transition-all duration-200 ease-in-out hover:bg-slate-800/70"
-                        >
-                            <option value="English">English (Default)</option>
-                            <option value="Hindi">Hindi</option>
-                            <option value="Telugu">Telugu</option>
-                            <option value="Tamil">Tamil</option>
-                            <option value="Marathi">Marathi</option>
-                            <option value="Garhwali">Garhwali</option>
-                            <option value="Gujarati">Gujarati</option>
-                            <option value="Kannada">Kannada</option>
-                            <option value="Malayalam">Malayalam</option>
-                            <option value="Odia">Odia</option>
-                            <option value="Punjabi">Punjabi</option>
-                            <option value="Urdu">Urdu</option>
-                            <option value="Bengali">Bengali</option>
-                        </select>
+                        <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm sm:text-base text-white">Chat Settings</span>
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm sm:text-base text-white">Privacy & Safety</span>
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm sm:text-base text-white">Shared Photos</span>
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm sm:text-base text-white">Shared Files</span>
+                                <svg className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 111.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        {/* Language Selection */}
+                        <div className="p-3 sm:p-4 rounded-lg bg-slate-700/50 border border-gray-300/10">
+                            <div className="flex items-center justify-between">
+                                <span className="text-sm sm:text-base text-white">Language</span>
+                                <select 
+                                    className="bg-slate-800/50 text-white text-sm sm:text-base px-3 py-1 rounded-md border border-gray-300/20 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    value={user.language}
+                                    onChange={handleLanguageChange}
+                                >
+                                    <option value="en">English</option>
+                                    <option value="hi">Hindi</option>
+                                    <option value="es">Spanish</option>
+                                    <option value="fr">French</option>
+                                    <option value="de">German</option>
+                                    <option value="it">Italian</option>
+                                    <option value="pt">Portuguese</option>
+                                    <option value="ru">Russian</option>
+                                    <option value="ja">Japanese</option>
+                                    <option value="ko">Korean</option>
+                                    <option value="zh">Chinese</option>
+                                    <option value="ar">Arabic</option>
+                                    <option value="tr">Turkish</option>
+                                    <option value="pl">Polish</option>
+                                    <option value="nl">Dutch</option>
+                                    <option value="sv">Swedish</option>
+                                    <option value="da">Danish</option>
+                                    <option value="no">Norwegian</option>
+                                    <option value="fi">Finnish</option>
+                                    <option value="cs">Czech</option>
+                                    <option value="hu">Hungarian</option>
+                                    <option value="ro">Romanian</option>
+                                    <option value="bg">Bulgarian</option>
+                                    <option value="hr">Croatian</option>
+                                    <option value="sk">Slovak</option>
+                                    <option value="sl">Slovenian</option>
+                                    <option value="et">Estonian</option>
+                                    <option value="lv">Latvian</option>
+                                    <option value="lt">Lithuanian</option>
+                                    <option value="mt">Maltese</option>
+                                    <option value="ga">Irish</option>
+                                    <option value="cy">Welsh</option>
+                                    <option value="eu">Basque</option>
+                                    <option value="ca">Catalan</option>
+                                    <option value="gl">Galician</option>
+                                    <option value="is">Icelandic</option>
+                                    <option value="mk">Macedonian</option>
+                                    <option value="sq">Albanian</option>
+                                    <option value="sr">Serbian</option>
+                                    <option value="bs">Bosnian</option>
+                                    <option value="me">Montenegrin</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    
-                    <button 
-                        onClick={handleLogout}
-                        className="w-full py-3 sm:py-4 px-4 sm:px-5 bg-blue-600 hover:bg-blue-700 text-white text-sm sm:text-base font-medium rounded-lg transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:ring-offset-2 focus:ring-offset-slate-900"
-                    >
-                        Logout
-                    </button>
+
+                    {/* Action Buttons */}
+                    <div className="space-y-3 sm:space-y-4">
+                        <button 
+                            onClick={handleBlock}
+                            className="w-full px-4 py-3 sm:px-5 sm:py-4 text-sm sm:text-base font-medium text-white bg-orange-600/80 hover:bg-orange-600 active:bg-orange-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-orange-500/50"
+                        >
+                            {isReceiverBlocked ? "Unblock User" : "Block User"}
+                        </button>
+                        
+                        <button 
+                            onClick={handleLogout}
+                            className="w-full px-4 py-3 sm:px-5 sm:py-4 text-sm sm:text-base font-medium text-white bg-red-600/80 hover:bg-red-600 active:bg-red-700 rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-red-500/50"
+                        >
+                            Logout
+                        </button>
+                    </div>
                 </div>
             </div>
         </>

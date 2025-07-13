@@ -62,8 +62,8 @@ export default function ChatList({ onChatSelect }) {
    })
 
     return (
-        <div className="flex-1 overflow-y-auto">
-            <div className="flex items-center gap-3 sm:gap-5 p-4 sm:p-5">
+        <div className="flex-1 flex flex-col overflow-hidden">
+            <div className="flex-shrink-0 flex items-center gap-3 sm:gap-5 p-4 sm:p-5 border-b border-white/10">
                 <div className="flex-1 bg-slate-800/50 backdrop-blur-sm flex items-center gap-3 sm:gap-5 rounded-lg p-2.5 transition-all duration-200 hover:bg-slate-800/60">
                     <img src="/search.png" alt="Search" className="w-4 h-4 sm:w-5 sm:h-5 opacity-70" />
                     <input 
@@ -86,7 +86,7 @@ export default function ChatList({ onChatSelect }) {
                 </button>
             </div>
       
-            <div className="space-y-1">
+            <div className="flex-1 overflow-y-auto overscroll-contain space-y-1">
                 {filteredChats && filteredChats.map((chat) => (
                     <div 
                         key={chat.chatId} 

@@ -11,7 +11,7 @@ export default function UserInfo() {
     }
 
     return (
-        <div className="p-4 sm:p-5 flex items-center justify-between bg-white/5 backdrop-blur-sm rounded-lg border border-white/10">
+        <div className="flex-shrink-0 p-4 sm:p-5 flex items-center justify-between bg-white/5 backdrop-blur-sm border-b border-white/10">
             <div className="flex items-center gap-3 sm:gap-5">
                 <img 
                     src={user.avatar || "./avatar.png"} 

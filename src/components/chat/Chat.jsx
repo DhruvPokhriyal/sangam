@@ -93,8 +93,9 @@ export default function Chat({ className = "", onDetailToggle }) {
 
     return (
         <>
-            <div className={`${className} flex-[2] border-l border-r border-gray-600/20 h-full flex flex-col`}>
-                <div className="p-4 sm:p-5 lg:p-6 flex items-center justify-between border-b border-gray-600/20">
+            <div className={`${className} border-r border-gray-600/20 h-full flex flex-col overflow-hidden`}>
+                {/* Chat Header - Fixed */}
+                <div className="flex-shrink-0 p-4 sm:p-5 lg:p-6 flex items-center justify-between border-b border-gray-600/20">
                     <div className="flex items-center gap-3 sm:gap-4 lg:gap-5">
                         <img 
                             src={isCurrentUserBlocked || isReceiverBlocked ? "./avatar.png" : receiver?.avatar || "./avatar.png"} 
@@ -126,11 +127,13 @@ export default function Chat({ className = "", onDetailToggle }) {
                         <img src="./info.png" alt="" className="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer hover:opacity-80 transition-opacity hidden lg:block" />
                     </div>
                 </div>
-                <div className="p-4 sm:p-5 lg:p-6 flex-1 overflow-y-auto flex flex-col gap-3 sm:gap-4 lg:gap-5">
+                
+                {/* Messages Area - Scrollable */}
+                <div className="flex-1 overflow-y-auto overscroll-contain p-4 sm:p-5 lg:p-6 flex flex-col gap-3 sm:gap-4 lg:gap-5">
                     {chat &&
                         chat.messages.map((message) => (
                             <div
-                                className={`max-w-[85%] sm:max-w-[75%] lg:max-w-[70%] flex gap-3 sm:gap-4 lg:gap-5 ${
+                                className={`max-w-[85%] sm:max-w-[75%] lg:max-w-[70%] flex gap-3 sm:gap-4 lg:gap-5 flex-shrink-0 ${
                                     message.senderId === user.id ? "self-end" : ""
                                 }`}
                                 key={message.createdAt}
@@ -156,7 +159,7 @@ export default function Chat({ className = "", onDetailToggle }) {
                             </div>
                         ))}
                     {img.url && (
-                        <div className="max-w-[85%] sm:max-w-[75%] lg:max-w-[70%] flex gap-3 sm:gap-4 lg:gap-5 self-end">
+                        <div className="max-w-[85%] sm:max-w-[75%] lg:max-w-[70%] flex gap-3 sm:gap-4 lg:gap-5 self-end flex-shrink-0">
                             <div className="flex-1 flex flex-col gap-1 sm:gap-2">
                                 <img 
                                     src={img.url} 
@@ -168,7 +171,9 @@ export default function Chat({ className = "", onDetailToggle }) {
                     )}
                     <div ref={endRef}></div>
                 </div>
-                <div className="p-4 sm:p-5 lg:p-6 flex items-center justify-between border-t border-gray-600/20 gap-3 sm:gap-4 lg:gap-5 mt-auto">
+                
+                {/* Input Bar - Fixed at Bottom */}
+                <div className="flex-shrink-0 p-4 sm:p-5 lg:p-6 flex items-center justify-between border-t border-gray-600/20 gap-3 sm:gap-4 lg:gap-5">
                     <div className="flex gap-3 sm:gap-4 lg:gap-5">
                         <label htmlFor="img" className="cursor-pointer hover:opacity-80 transition-opacity">
                             <img src="./img.png" alt="" className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -181,6 +186,7 @@ export default function Chat({ className = "", onDetailToggle }) {
                         disabled={isCurrentUserBlocked || isReceiverBlocked}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
                         className="flex-1 bg-gray-800/50 border-none outline-none text-white px-4 py-3 sm:px-5 sm:py-4 rounded-lg text-sm sm:text-base placeholder:text-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-blue-500 transition-all"
                     />
                     <div className="relative">

@@ -60,110 +60,126 @@ export default function Login() {
     }
 
     return (
-        <>
-            <div className="w-full h-full flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-24 xl:gap-32 px-4 sm:px-6 lg:px-8 py-8 lg:py-0">
-                <div className="flex-1 w-full max-w-md lg:max-w-none flex flex-col items-center gap-6 lg:gap-8">
-                    <h2 className="text-2xl sm:text-3xl font-semibold text-white text-center">Welcome back,</h2>
-                    <form onSubmit={handleLogin} className="w-full flex flex-col items-center justify-center gap-4 lg:gap-6">
-                        <input
-                            type="email"
-                            name="email"
-                            id=""
-                            placeholder="Email"
-                            className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
-                        />
-                        <input
-                            type="password"
-                            name="password"
-                            id=""
-                            placeholder="Password"
-                            className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
-                        />
-                        <button 
-                            disabled={loading}
-                            className="w-full px-5 py-4 border-none bg-blue-500 hover:bg-blue-600 text-white rounded-md cursor-pointer font-medium transition-colors duration-200 disabled:cursor-not-allowed disabled:bg-blue-400 disabled:opacity-60"
-                        >
-                            {loading ? "Signing In..." : "Sign In"}
-                        </button>
-                    </form>
-                </div>
-                
-                <div className="w-full lg:w-0.5 h-0.5 lg:h-4/5 bg-gray-600/20 hidden lg:block"></div>
-                
-                <div className="flex-1 w-full max-w-md lg:max-w-none flex flex-col items-center gap-6 lg:gap-8">
-                    <h2 className="text-2xl sm:text-3xl font-semibold text-white text-center">Create an account</h2>
-                    <form onSubmit={handleRegister} className="w-full flex flex-col items-center justify-center gap-4 lg:gap-6">
-                        <label 
-                            htmlFor="avatar"
-                            className="w-full flex items-center justify-between cursor-pointer text-white hover:text-gray-300 transition-colors duration-200 group"
-                        >
-                            <img 
-                                src={avatar.url || "./avatar.png"} 
-                                alt="Avatar preview" 
-                                className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl object-cover opacity-70 group-hover:opacity-90 transition-opacity duration-200 ring-2 ring-gray-600/30 group-hover:ring-blue-500/50"
-                            />
-                            <span className="underline underline-offset-2">Upload an image</span>
-                        </label>
-                        <input
-                            type="file"
-                            name="avatar"
-                            id="avatar"
-                            style={{ display: "none" }}
-                            onChange={handleAvatar}
-                        />
-                        <input
-                            type="text"
-                            name="username"
-                            placeholder="Username"
-                            className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
-                        />
-                        <input
-                            type="email"
-                            name="email"
-                            id=""
-                            placeholder="Email"
-                            className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
-                        />
-                        <input
-                            type="password"
-                            name="password"
-                            id=""
-                            placeholder="Password"
-                            className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
-                        />
-                        <div className="w-full flex flex-col gap-2">
-                            <label htmlFor="language" className="text-white text-sm font-medium">Language:</label>
-                            <select 
-                                id="language" 
-                                name="language" 
-                                className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200 cursor-pointer" 
-                                value={language} 
-                                onChange={(e) => setLanguage(e.target.value)}
-                            >
-                                <option value="English" className="bg-slate-800 text-white">English (Default)</option>
-                                <option value="Hindi" className="bg-slate-800 text-white">Hindi</option>
-                                <option value="Telugu" className="bg-slate-800 text-white">Telugu</option>
-                                <option value="Tamil" className="bg-slate-800 text-white">Tamil</option>
-                                <option value="Marathi" className="bg-slate-800 text-white">Marathi</option>
-                                <option value="Garhwali" className="bg-slate-800 text-white">Garhwali</option>
-                                <option value="Gujarati" className="bg-slate-800 text-white">Gujarati</option>
-                                <option value="Kannada" className="bg-slate-800 text-white">Kannada</option>
-                                <option value="Malayalam" className="bg-slate-800 text-white">Malayalam</option>
-                                <option value="Odia" className="bg-slate-800 text-white">Odia</option>
-                                <option value="Punjabi" className="bg-slate-800 text-white">Punjabi</option>
-                                <option value="Urdu" className="bg-slate-800 text-white">Urdu</option>
-                                <option value="Bengali" className="bg-slate-800 text-white">Bengali</option>
-                            </select>
-                        </div>
-                        <button 
-                            disabled={loading}
-                            className="w-full px-5 py-4 border-none bg-blue-500 hover:bg-blue-600 text-white rounded-md cursor-pointer font-medium transition-colors duration-200 disabled:cursor-not-allowed disabled:bg-blue-400 disabled:opacity-60"
-                        >
-                            {loading ? "Creating Account..." : "Sign Up"}
-                        </button>
-                    </form>
-                </div>
+        <div className="flex-1 flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-24 xl:gap-32 px-4 sm:px-6 lg:px-8 py-8 lg:py-0 overflow-y-auto">
+            <div className="w-full max-w-md">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-white text-center mb-8">Welcome back,</h2>
+                <form onSubmit={handleLogin} className="w-full flex flex-col items-center justify-center gap-4 lg:gap-6">
+                    <input
+                        type="email"
+                        name="email"
+                        id=""
+                        placeholder="Email"
+                        className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        id=""
+                        placeholder="Password"
+                        className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                    />
+                    <button 
+                        disabled={loading}
+                        className="w-full px-5 py-4 border-none bg-blue-500 hover:bg-blue-600 text-white rounded-md cursor-pointer font-medium transition-colors duration-200 disabled:cursor-not-allowed disabled:bg-blue-400 disabled:opacity-60"
+                    >
+                        {loading ? "Signing In..." : "Sign In"}
+                    </button>
+                </form>
             </div>
-        </>
+            
+            <div className="w-full lg:w-0.5 h-0.5 lg:h-4/5 bg-gray-600/20 hidden lg:block"></div>
+            
+            <div className="w-full max-w-md">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-white text-center mb-8">Create Account</h2>
+                <form onSubmit={handleRegister} className="w-full flex flex-col items-center justify-center gap-4 lg:gap-6">
+                    <label htmlFor="file" className="flex flex-col items-center gap-3 cursor-pointer">
+                        <img 
+                            src={avatar.url || "./avatar.png"} 
+                            alt="Avatar" 
+                            className="w-20 h-20 sm:w-24 sm:h-24 rounded-full object-cover border-2 border-gray-600 hover:border-blue-500 transition-colors"
+                        />
+                        <span className="text-sm text-gray-400">Upload an avatar</span>
+                    </label>
+                    <input 
+                        type="file" 
+                        id="file" 
+                        style={{ display: "none" }} 
+                        onChange={handleAvatar}
+                    />
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Username"
+                        className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email"
+                        className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white placeholder-gray-400 rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                    />
+                    <select
+                        name="language"
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value)}
+                        className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                    >
+                        <option value="en">English</option>
+                        <option value="hi">Hindi</option>
+                        <option value="es">Spanish</option>
+                        <option value="fr">French</option>
+                        <option value="de">German</option>
+                        <option value="it">Italian</option>
+                        <option value="pt">Portuguese</option>
+                        <option value="ru">Russian</option>
+                        <option value="ja">Japanese</option>
+                        <option value="ko">Korean</option>
+                        <option value="zh">Chinese</option>
+                        <option value="ar">Arabic</option>
+                        <option value="tr">Turkish</option>
+                        <option value="pl">Polish</option>
+                        <option value="nl">Dutch</option>
+                        <option value="sv">Swedish</option>
+                        <option value="da">Danish</option>
+                        <option value="no">Norwegian</option>
+                        <option value="fi">Finnish</option>
+                        <option value="cs">Czech</option>
+                        <option value="hu">Hungarian</option>
+                        <option value="ro">Romanian</option>
+                        <option value="bg">Bulgarian</option>
+                        <option value="hr">Croatian</option>
+                        <option value="sk">Slovak</option>
+                        <option value="sl">Slovenian</option>
+                        <option value="et">Estonian</option>
+                        <option value="lv">Latvian</option>
+                        <option value="lt">Lithuanian</option>
+                        <option value="mt">Maltese</option>
+                        <option value="ga">Irish</option>
+                        <option value="cy">Welsh</option>
+                        <option value="eu">Basque</option>
+                        <option value="ca">Catalan</option>
+                        <option value="gl">Galician</option>
+                        <option value="is">Icelandic</option>
+                        <option value="mk">Macedonian</option>
+                        <option value="sq">Albanian</option>
+                        <option value="sr">Serbian</option>
+                        <option value="bs">Bosnian</option>
+                        <option value="me">Montenegrin</option>
+                    </select>
+                    <button 
+                        disabled={loading}
+                        className="w-full px-5 py-4 border-none bg-blue-500 hover:bg-blue-600 text-white rounded-md cursor-pointer font-medium transition-colors duration-200 disabled:cursor-not-allowed disabled:bg-blue-400 disabled:opacity-60"
+                    >
+                        {loading ? "Creating Account..." : "Sign Up"}
+                    </button>
+                </form>
+            </div>
+        </div>
     );
 }

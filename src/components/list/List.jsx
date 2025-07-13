@@ -4,7 +4,7 @@ import UserInfo from "./userInfo/UserInfo";
 
 export default function List({ className = "", onChatSelect }){
     return (
-        <div className={`${className} flex-1 flex flex-col h-full`}>
+        <div className={`${className} border-r border-gray-600/20 bg-slate-800/30 h-full flex flex-col overflow-hidden`}>
             <UserInfo />
             <ChatList onChatSelect={onChatSelect} />
         </div>
