@@ -94,76 +94,75 @@ export default function Chat() {
 
     return (
         <>
-            <div className="chat">
-                <div className="top">
-                    <div className="user">
-                        <img src={isCurrentUserBlocked || isReceiverBlocked ? "./avatar.png" : receiver?.avatar || "./avatar.png"} alt="" />
-                        <div className="texts">
-                            <span>{isCurrentUserBlocked || isReceiverBlocked ? "Unknown User" : receiver?.username || "Unknown User"}</span>
-                            <p>{isCurrentUserBlocked || isReceiverBlocked ? "Bio not available" : receiver?.bio || "Lorem ipsum dolor sit amet."}</p>
+            <div className="flex-[2] border-l border-r border-gray-600/20 h-full flex flex-col">
+                <div className="p-4 sm:p-5 lg:p-6 flex items-center justify-between border-b border-gray-600/20">
+                    <div className="flex items-center gap-3 sm:gap-4 lg:gap-5">
+                        <img 
+                            src={isCurrentUserBlocked || isReceiverBlocked ? "./avatar.png" : receiver?.avatar || "./avatar.png"} 
+                            alt="" 
+                            className="w-10 h-10 sm:w-12 sm:h-12 lg:w-15 lg:h-15 rounded-full object-cover"
+                        />
+                        <div className="flex flex-col gap-1">
+                            <span className="text-sm sm:text-base lg:text-lg font-bold text-white">
+                                {isCurrentUserBlocked || isReceiverBlocked ? "Unknown User" : receiver?.username || "Unknown User"}
+                            </span>
+                            <p className="text-xs sm:text-sm font-light text-gray-400">
+                                {isCurrentUserBlocked || isReceiverBlocked ? "Bio not available" : receiver?.bio || "Lorem ipsum dolor sit amet."}
+                            </p>
                         </div>
                     </div>
-                    <div className="icons">
-                        {/* <img src="./phone.png" alt="" />
-                        <img src="./video.png" alt="" /> */}
-                        <img src="./info.png" alt="" />
+                    <div className="flex gap-3 sm:gap-4 lg:gap-5">
+                        <img src="./info.png" alt="" className="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer hover:opacity-80 transition-opacity" />
                     </div>
                 </div>
-                <div className="center">
+                <div className="p-4 sm:p-5 lg:p-6 flex-1 overflow-y-auto flex flex-col gap-3 sm:gap-4 lg:gap-5">
                     {chat &&
                         chat.messages.map((message) => (
                             <div
-                                className={`message ${message.senderId === user.id ? "own" : ""}`}
+                                className={`max-w-[85%] sm:max-w-[75%] lg:max-w-[70%] flex gap-3 sm:gap-4 lg:gap-5 ${
+                                    message.senderId === user.id ? "self-end" : ""
+                                }`}
                                 key={message.createdAt}
                             >
-                                <div className="texts">
+                                <div className="flex-1 flex flex-col gap-1 sm:gap-2">
                                     {message.img && (
-                                        <img src={message.img} alt="" />
+                                        <img 
+                                            src={message.img} 
+                                            alt="" 
+                                            className="w-full h-48 sm:h-60 lg:h-72 rounded-lg object-cover"
+                                        />
                                     )}
-                                    {/* <p>{message.translatedMessage || message.text}</p> */}
-                                    {
-                                        message.senderId === user.id ? <p>{message.text}</p> : <p>{message.translatedMessage || message.text}</p>
-                                    }
+                                    {message.senderId === user.id ? (
+                                        <p className="px-4 py-3 sm:px-5 sm:py-4 bg-blue-600 text-white rounded-lg text-sm sm:text-base">
+                                            {message.text}
+                                        </p>
+                                    ) : (
+                                        <p className="px-4 py-3 sm:px-5 sm:py-4 bg-gray-800/30 text-white rounded-lg text-sm sm:text-base">
+                                            {message.translatedMessage || message.text}
+                                        </p>
+                                    )}
                                 </div>
                             </div>
                         ))}
-                        {
-                        img.url && (
-                            <div className="message own">
-                                <div className="texts">
-                                    <img src={img.url} alt="" />
-                                </div>
+                    {img.url && (
+                        <div className="max-w-[85%] sm:max-w-[75%] lg:max-w-[70%] flex gap-3 sm:gap-4 lg:gap-5 self-end">
+                            <div className="flex-1 flex flex-col gap-1 sm:gap-2">
+                                <img 
+                                    src={img.url} 
+                                    alt="" 
+                                    className="w-full h-48 sm:h-60 lg:h-72 rounded-lg object-cover"
+                                />
                             </div>
-                        )                             
-                        }
-
-                    {/* <div className="message own">
-                        <div className="texts">
-                            <img
-                                src="https://images.unsplash.com/photo-1504194104404-433180773017?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                alt=""
-                            />
-                            <p>
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Iure id beatae laborum minima
-                                quaerat ratione doloremque recusandae voluptates
-                                velit explicabo blanditiis eos dolorem, suscipit
-                                sit amet molestias optio dignissimos saepe.
-                            </p>
-                            <span>1 min ago</span>
                         </div>
-                    </div> */}
+                    )}
                     <div ref={endRef}></div>
                 </div>
-                <div className="bottom">
-                    <div className="icons">
-
-                        <label htmlFor="img" className="cursor-pointer">
-                            <img src="./img.png" alt="" />
+                <div className="p-4 sm:p-5 lg:p-6 flex items-center justify-between border-t border-gray-600/20 gap-3 sm:gap-4 lg:gap-5 mt-auto">
+                    <div className="flex gap-3 sm:gap-4 lg:gap-5">
+                        <label htmlFor="img" className="cursor-pointer hover:opacity-80 transition-opacity">
+                            <img src="./img.png" alt="" className="w-4 h-4 sm:w-5 sm:h-5" />
                             <input type="file" id="img" onChange={handleImage} style={{ display: "none" }} />
                         </label>
-                        {/* <img src="./camera.png" alt="" />
-                        <img src="./mic.png" alt="" /> */}
                     </div>
                     <input
                         type="text"
@@ -171,21 +170,27 @@ export default function Chat() {
                         disabled={isCurrentUserBlocked || isReceiverBlocked}
                         value={text}
                         onChange={(e) => setText(e.target.value)}
+                        className="flex-1 bg-gray-800/50 border-none outline-none text-white px-4 py-3 sm:px-5 sm:py-4 rounded-lg text-sm sm:text-base placeholder:text-gray-400 disabled:cursor-not-allowed focus:ring-2 focus:ring-blue-500 transition-all"
                     />
-                    <div className="emoji">
+                    <div className="relative">
                         <img
                             src="./emoji.png"
                             alt=""
                             onClick={() => setOpen((prev) => !prev)}
+                            className="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer hover:opacity-80 transition-opacity"
                         />
-                        <div className="picker">
+                        <div className="absolute bottom-12 left-0 z-10">
                             <EmojiPicker
                                 open={open}
                                 onEmojiClick={handleEmoji}
-                            ></EmojiPicker>
+                            />
                         </div>
                     </div>
-                    <button className="sendButton" onClick={handleSend} disabled={isCurrentUserBlocked || isReceiverBlocked}>
+                    <button 
+                        className="bg-blue-600 text-white px-4 py-2 sm:px-5 sm:py-3 border-none rounded-md cursor-pointer text-sm sm:text-base font-medium hover:bg-blue-700 disabled:bg-blue-600/70 disabled:cursor-not-allowed transition-colors"
+                        onClick={handleSend} 
+                        disabled={isCurrentUserBlocked || isReceiverBlocked}
+                    >
                         Send
                     </button>
                 </div>
