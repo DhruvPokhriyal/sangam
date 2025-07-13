@@ -33,7 +33,7 @@ export default function ChatList() {
     const handleSelect = async (chat) => {
 
         const userChats = chats.map(c => {
-            const {user, ...rest} = c;
+            const { user: _, ...rest } = c;
             return rest;
         })
         const chatIndex = userChats.findIndex(c => c.chatId === chat.chatId);
@@ -58,42 +58,70 @@ export default function ChatList() {
    })
 
     return (
-        <div className="chatList">
-            <div className="search">
-                <div className="searchBar">
-                    <img src="/search.png"></img>
-                    <input type="text" placeholder="Search" value={input} onChange={(e) => setInput(e.target.value)}></input>
+        <div className="flex-1 overflow-y-auto">
+            <div className="flex items-center gap-3 sm:gap-5 p-4 sm:p-5">
+                <div className="flex-1 bg-slate-800/50 backdrop-blur-sm flex items-center gap-3 sm:gap-5 rounded-lg p-2.5 transition-all duration-200 hover:bg-slate-800/60">
+                    <img src="/search.png" alt="Search" className="w-4 h-4 sm:w-5 sm:h-5 opacity-70" />
+                    <input 
+                        type="text" 
+                        placeholder="Search" 
+                        value={input} 
+                        onChange={(e) => setInput(e.target.value)}
+                        className="bg-transparent border-none outline-none text-white flex-1 text-sm sm:text-base placeholder:text-gray-400"
+                    />
                 </div>
-                <img
-                    src={addMode ? "./minus.png" : "./plus.png"}
-                    className="add"
+                <button
                     onClick={() => setAddMode((prev) => !prev)}
-                ></img>
+                    className="w-8 h-8 sm:w-9 sm:h-9 bg-slate-800/50 backdrop-blur-sm p-2 sm:p-2.5 rounded-lg cursor-pointer transition-all duration-200 hover:bg-slate-800/60 hover:scale-105 active:scale-95"
+                >
+                    <img 
+                        src={addMode ? "./minus.png" : "./plus.png"}
+                        alt={addMode ? "Close" : "Add"}
+                        className="w-full h-full"
+                    />
+                </button>
             </div>
       
-        {
-            filteredChats && filteredChats.map((chat) => (
-                <div className="item" key={chat.chatId} onClick={() => handleSelect(chat)} style={{
-                    backgroundColor: chat  && chat.isSeen ? "transparent" : "#5183f5"
-                }}>
-                    <img src={chat.user.blocked.includes(user.id) || user.blocked.includes(chat.user.id) ? "./avatar.png" : chat.user.avatar || "./avatar.png"} alt="" />
-                    <div className="texts">
-                        <span>{chat.user.blocked.includes(user.id) || user.blocked.includes(chat.user.id) ? "Unknown User" : chat.user.username}</span>
-                        {/* <p>{chat.user.blocked.includes(user.id) || user.blocked.includes(chat.user.id) ? "You are blocked by this user" : chat.lastMessage}</p> */}
-                        {
-                            chat.user.blocked.includes(user.id) && <p>You are blocked by this user</p>
-                        }
-                        {
-                            user.blocked.includes(chat.user.id) && <p>You have blocked this user</p>
-                        }
-                        {
-                            !chat.user.blocked.includes(user.id) && !user.blocked.includes(chat.user.id) && <p>{chat.lastMessage}</p>
-                        }
+            <div className="space-y-1">
+                {filteredChats && filteredChats.map((chat) => (
+                    <div 
+                        key={chat.chatId} 
+                        onClick={() => handleSelect(chat)}
+                        className={`flex items-center gap-3 sm:gap-5 p-4 sm:p-5 cursor-pointer border-b border-gray-300/10 transition-all duration-200 hover:bg-slate-800/30 ${
+                            chat && chat.isSeen ? "bg-transparent" : "bg-blue-600/80 hover:bg-blue-600/90"
+                        }`}
+                    >
+                        <div className="relative">
+                            <img 
+                                src={chat.user.blocked.includes(user.id) || user.blocked.includes(chat.user.id) ? "./avatar.png" : chat.user.avatar || "./avatar.png"} 
+                                alt="User avatar" 
+                                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full object-cover ring-2 ring-transparent transition-all duration-200 hover:ring-blue-400/50"
+                            />
+                            {!chat.isSeen && (
+                                <div className="absolute -top-1 -right-1 w-3 h-3 bg-blue-500 rounded-full border-2 border-slate-900"></div>
+                            )}
+                        </div>
+                        <div className="flex flex-col gap-1 sm:gap-2.5 flex-1 min-w-0">
+                            <span className="font-medium text-sm sm:text-base text-white truncate">
+                                {chat.user.blocked.includes(user.id) || user.blocked.includes(chat.user.id) ? "Unknown User" : chat.user.username}
+                            </span>
+                            <div className="text-xs sm:text-sm font-light text-gray-300 truncate">
+                                {chat.user.blocked.includes(user.id) && (
+                                    <p className="text-red-400">You are blocked by this user</p>
+                                )}
+                                {user.blocked.includes(chat.user.id) && (
+                                    <p className="text-orange-400">You have blocked this user</p>
+                                )}
+                                {!chat.user.blocked.includes(user.id) && !user.blocked.includes(chat.user.id) && (
+                                    <p className="text-gray-400">{chat.lastMessage}</p>
+                                )}
+                            </div>
+                        </div>
                     </div>
-                </div>
-            ))
-        }
-            {addMode && <AddUser setAddMode={setAddMode}></AddUser>}
+                ))}
+            </div>
+            
+            {addMode && <AddUser setAddMode={setAddMode} />}
         </div>
     );
 }
