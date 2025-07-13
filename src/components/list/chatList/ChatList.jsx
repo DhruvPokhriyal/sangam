@@ -6,7 +6,7 @@ import { onSnapshot, doc, getDoc, updateDoc  } from "firebase/firestore";
 import { db } from "../../../lib/firebase";
 import { useChatStore } from "../../../hooks/useChatStore";
 
-export default function ChatList() {
+export default function ChatList({ onChatSelect }) {
     const [addMode, setAddMode] = useState(false);
     const [chats, setChats] = useState([]);
     const [input, setInput] = useState(""); 
@@ -44,6 +44,10 @@ export default function ChatList() {
                 chats: userChats
             })
             changeChat(chat.chatId, chat.user);
+            // Switch to chat view on mobile
+            if (onChatSelect) {
+                onChatSelect();
+            }
         } catch (error) {
             console.log(error);
         }

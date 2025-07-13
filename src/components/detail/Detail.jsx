@@ -5,7 +5,7 @@ import { useUserStore } from "../../hooks/useUserStore";
 import { doc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 
-export default function Detail() {
+export default function Detail({ className = "", onClose }) {
     const { user, logout } = useAuth();
     const { updateUserData } = useUserStore();
     const {receiver, isCurrentUserBlocked, isReceiverBlocked, refreshBlockingStates} = useChatStore();
@@ -49,8 +49,19 @@ export default function Detail() {
 
     return (
         <>
-            <div className="flex-1">
-                <div className="py-6 sm:py-8 px-4 sm:px-5 lg:px-6 flex flex-col items-center gap-3 sm:gap-4 border-b border-gray-300/10">
+            <div className={`${className} flex-1`}>
+                <div className="py-6 sm:py-8 px-4 sm:px-5 lg:px-6 flex flex-col items-center gap-3 sm:gap-4 border-b border-gray-300/10 relative">
+                    {/* Mobile close button */}
+                    <button 
+                        onClick={onClose}
+                        className="absolute top-4 right-4 p-2 lg:hidden bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+                        aria-label="Close Profile"
+                    >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd"/>
+                        </svg>
+                    </button>
+                    
                     <div className="w-20 h-20 sm:w-24 sm:h-24 lg:w-28 lg:h-28 rounded-full overflow-hidden">
                         <img 
                             src={isCurrentUserBlocked || isReceiverBlocked ? "./avatar.png" : receiver?.avatar || "./avatar.png"} 

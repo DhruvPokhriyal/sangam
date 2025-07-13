@@ -8,7 +8,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { updateDoc, getDoc, arrayUnion } from "firebase/firestore";
 import uploadAvatar from "../../utils/upload";
  
-export default function Chat() {
+export default function Chat({ className = "", onDetailToggle }) {
     const [chat, setChat] = useState(null);
     const [open, setOpen] = useState(false);
     const [text, setText] = useState("");
@@ -19,7 +19,6 @@ export default function Chat() {
     const endRef = useRef(null);
     const { user } = useAuth();
     const { chatId, receiver, isCurrentUserBlocked, isReceiverBlocked } = useChatStore();
-    console.log(chatId, receiver);
     useEffect(() => {
         endRef.current.scrollIntoView({ behavior: "smooth" });
     });
@@ -94,7 +93,7 @@ export default function Chat() {
 
     return (
         <>
-            <div className="flex-[2] border-l border-r border-gray-600/20 h-full flex flex-col">
+            <div className={`${className} flex-[2] border-l border-r border-gray-600/20 h-full flex flex-col`}>
                 <div className="p-4 sm:p-5 lg:p-6 flex items-center justify-between border-b border-gray-600/20">
                     <div className="flex items-center gap-3 sm:gap-4 lg:gap-5">
                         <img 
@@ -112,7 +111,19 @@ export default function Chat() {
                         </div>
                     </div>
                     <div className="flex gap-3 sm:gap-4 lg:gap-5">
-                        <img src="./info.png" alt="" className="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer hover:opacity-80 transition-opacity" />
+                        {/* Mobile info button */}
+                        <button 
+                            onClick={onDetailToggle}
+                            className="p-2 lg:hidden bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors"
+                            aria-label="User Profile"
+                        >
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"/>
+                            </svg>
+                        </button>
+                        
+                        {/* Desktop info icon */}
+                        <img src="./info.png" alt="" className="w-4 h-4 sm:w-5 sm:h-5 cursor-pointer hover:opacity-80 transition-opacity hidden lg:block" />
                     </div>
                 </div>
                 <div className="p-4 sm:p-5 lg:p-6 flex-1 overflow-y-auto flex flex-col gap-3 sm:gap-4 lg:gap-5">
