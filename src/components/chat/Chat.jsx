@@ -120,7 +120,10 @@ export default function Chat() {
                                     {message.img && (
                                         <img src={message.img} alt="" />
                                     )}
-                                    <p>{message.text}</p>
+                                    {/* <p>{message.translatedMessage || message.text}</p> */}
+                                    {
+                                        message.senderId === user.id ? <p>{message.text}</p> : <p>{message.translatedMessage || message.text}</p>
+                                    }
                                 </div>
                             </div>
                         ))}
