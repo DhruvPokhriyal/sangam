@@ -55,6 +55,7 @@ export default function Chat() {
             await updateDoc(doc(db, "chats", chatId), {
                 messages: arrayUnion({
                     senderId: user.id,
+                    receiverId: receiver.id,
                     text,
                     createdAt: new Date(),
                     ...(imgUrl && { img: imgUrl }),
