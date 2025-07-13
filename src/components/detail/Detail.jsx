@@ -30,9 +30,9 @@ export default function Detail() {
         <>
             <div className="detail">
                 <div className="user">
-                    <img src={receiver.avatar || "./avatar.png"} alt="" />
+                    <img src={isCurrentUserBlocked || isReceiverBlocked ? "./avatar.png" : receiver.avatar || "./avatar.png"} alt="" />
                     <h2>{receiver.username}</h2>
-                    <p>{receiver.bio || "Lorem ipsum dolor sit amet."}</p>
+                    <p>{isCurrentUserBlocked || isReceiverBlocked ? "Bio not available" : receiver.bio || "Lorem ipsum dolor sit amet."}</p>
                 </div>
                 <div className="info">
                     <div className="option">
