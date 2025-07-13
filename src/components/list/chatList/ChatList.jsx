@@ -9,6 +9,7 @@ import { useChatStore } from "../../../hooks/useChatStore";
 export default function ChatList() {
     const [addMode, setAddMode] = useState(false);
     const [chats, setChats] = useState([]);
+    const [input, setInput] = useState(""); 
     const { user } = useAuth();
     const { changeChat, chatId, receiver } = useChatStore();
     useEffect(() => {
@@ -51,12 +52,17 @@ export default function ChatList() {
     }
 
     console.log(chatId, receiver);
+
+   const filteredChats = chats.filter((chat) => {
+    return chat.user.username.toLowerCase().includes(input.toLowerCase());
+   })
+
     return (
         <div className="chatList">
             <div className="search">
                 <div className="searchBar">
                     <img src="/search.png"></img>
-                    <input type="text" placeholder="Search"></input>
+                    <input type="text" placeholder="Search" value={input} onChange={(e) => setInput(e.target.value)}></input>
                 </div>
                 <img
                     src={addMode ? "./minus.png" : "./plus.png"}
@@ -66,7 +72,7 @@ export default function ChatList() {
             </div>
       
         {
-            chats && chats.map((chat) => (
+            filteredChats && filteredChats.map((chat) => (
                 <div className="item" key={chat.chatId} onClick={() => handleSelect(chat)} style={{
                     backgroundColor: chat  && chat.isSeen ? "transparent" : "#5183f5"
                 }}>
