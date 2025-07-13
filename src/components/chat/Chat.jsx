@@ -96,10 +96,10 @@ export default function Chat() {
             <div className="chat">
                 <div className="top">
                     <div className="user">
-                        <img src={receiver?.avatar || "./avatar.png"} alt="" />
+                        <img src={isCurrentUserBlocked || isReceiverBlocked ? "./avatar.png" : receiver?.avatar || "./avatar.png"} alt="" />
                         <div className="texts">
-                            <span>{receiver?.username || "Unknown User"}</span>
-                            <p>{receiver?.bio || "Lorem ipsum dolor sit amet."}</p>
+                            <span>{isCurrentUserBlocked || isReceiverBlocked ? "Unknown User" : receiver?.username || "Unknown User"}</span>
+                            <p>{isCurrentUserBlocked || isReceiverBlocked ? "Bio not available" : receiver?.bio || "Lorem ipsum dolor sit amet."}</p>
                         </div>
                     </div>
                     <div className="icons">

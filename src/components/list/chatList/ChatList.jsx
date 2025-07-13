@@ -70,10 +70,19 @@ export default function ChatList() {
                 <div className="item" key={chat.chatId} onClick={() => handleSelect(chat)} style={{
                     backgroundColor: chat  && chat.isSeen ? "transparent" : "#5183f5"
                 }}>
-                    <img src={chat.user.avatar || "./avatar.png"} alt="" />
+                    <img src={chat.user.blocked.includes(user.id) || user.blocked.includes(chat.user.id) ? "./avatar.png" : chat.user.avatar || "./avatar.png"} alt="" />
                     <div className="texts">
-                        <span>{chat.user.username}</span>
-                        <p>{chat.lastMessage}</p>
+                        <span>{chat.user.blocked.includes(user.id) || user.blocked.includes(chat.user.id) ? "Unknown User" : chat.user.username}</span>
+                        {/* <p>{chat.user.blocked.includes(user.id) || user.blocked.includes(chat.user.id) ? "You are blocked by this user" : chat.lastMessage}</p> */}
+                        {
+                            chat.user.blocked.includes(user.id) && <p>You are blocked by this user</p>
+                        }
+                        {
+                            user.blocked.includes(chat.user.id) && <p>You have blocked this user</p>
+                        }
+                        {
+                            !chat.user.blocked.includes(user.id) && !user.blocked.includes(chat.user.id) && <p>{chat.lastMessage}</p>
+                        }
                     </div>
                 </div>
             ))
