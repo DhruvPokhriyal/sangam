@@ -53,6 +53,7 @@ export const useUserStore = create((set, get) => ({
                 avatar: userData.avatar,
                 id: res.user.uid,
                 blocked: [],
+                language: userData.language,
             });
 
             await setDoc(doc(db, "userChats", res.user.uid), {

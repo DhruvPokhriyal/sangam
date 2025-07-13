@@ -13,6 +13,7 @@ export default function Login() {
         file: null,
         url: "",
     });
+    const [language, setLanguage] = useState("en");
 
     const handleAvatar = useCallback(function handleAvatar(e) {
         if (e.target.files[0])
@@ -45,10 +46,10 @@ export default function Login() {
         e.preventDefault();
         setLoading(true);
         const formData = new FormData(e.target);
-        const { username, email, password } = Object.fromEntries(formData);
+        const { username, email, password, language } = Object.fromEntries(formData);
         try {
             const imgUrl = avatar.file ? await uploadAvatar(avatar.file) : "./avatar.png";
-            await signup(email, password, { username, avatar: imgUrl });
+            await signup(email, password, { username, avatar: imgUrl, language });
         } catch (err) {
             toast.error(err.message);
             console.log(err);
@@ -111,6 +112,21 @@ export default function Login() {
                             id=""
                             placeholder="Password"
                         />
+                        <label htmlFor="language">Language:</label>
+                        <select id="language" name="language" value={language} onChange={(e) => setLanguage(e.target.value)}>
+                            <option value="English">English (Default)</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="Telugu">Telugu</option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="Marathi">Marathi</option>
+                            <option value="Gujarati">Gujarati</option>
+                            <option value="Kannada">Kannada</option>
+                            <option value="Malayalam">Malayalam</option>
+                            <option value="Odia">Odia</option>
+                            <option value="Punjabi">Punjabi</option>
+                            <option value="Urdu">Urdu</option>
+                            <option value="Bengali">Bengali</option>
+                        </select>
                         <button disabled={loading}>Sign Up</button>
                     </form>
                 </div>
