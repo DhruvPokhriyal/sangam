@@ -1,11 +1,13 @@
 import { useAuth } from "../../hooks/useAuth";
 import "./detail.css";
 import { useChatStore } from "../../hooks/useChatStore";
+import { useUserStore } from "../../hooks/useUserStore";
 import { doc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 export default function Detail() {
     const { user, logout } = useAuth();
-    const {chatId, receiver, isCurrentUserBlocked, isReceiverBlocked, changeBlock} = useChatStore();
+    const { updateUserData } = useUserStore();
+    const {receiver, isCurrentUserBlocked, isReceiverBlocked, refreshBlockingStates} = useChatStore();
 
     function handleLogout() {
         logout();
@@ -19,7 +21,12 @@ export default function Detail() {
             await updateDoc(userDocRef, {
                 blocked: isReceiverBlocked ? arrayRemove(receiver.id) : arrayUnion(receiver.id)
             });
-            changeBlock();
+            
+            // Update user data in the store to reflect the new blocked array
+            await updateUserData();
+            
+            // Refresh blocking states in chat store
+            refreshBlockingStates();
 
         } catch(err){
             console.log(err);
@@ -30,9 +37,9 @@ export default function Detail() {
         <>
             <div className="detail">
                 <div className="user">
-                    <img src={isCurrentUserBlocked || isReceiverBlocked ? "./avatar.png" : receiver.avatar || "./avatar.png"} alt="" />
-                    <h2>{receiver.username}</h2>
-                    <p>{isCurrentUserBlocked || isReceiverBlocked ? "Bio not available" : receiver.bio || "Lorem ipsum dolor sit amet."}</p>
+                    <img src={isCurrentUserBlocked || isReceiverBlocked ? "./avatar.png" : receiver?.avatar || "./avatar.png"} alt="" />
+                    <h2>{receiver?.username || "Unknown User"}</h2>
+                    <p>{isCurrentUserBlocked || isReceiverBlocked ? "Bio not available" : receiver?.bio || "Lorem ipsum dolor sit amet."}</p>
                 </div>
                 <div className="info">
                     <div className="option">

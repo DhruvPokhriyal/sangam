@@ -19,6 +19,7 @@ export const useUserStore = create((set, get) => ({
             const userDoc = await getDoc(userRef);
             if (userDoc.exists()) {
                 set({ user: userDoc.data(), loading: false });
+                return userDoc.data();
             } else {
                 
                 throw new Error("User not found");
@@ -28,7 +29,20 @@ export const useUserStore = create((set, get) => ({
             set({ user: null, loading: false });
             throw error;
         }
-    },  
+    },
+    
+    // Add function to update user data after blocking
+    updateUserData: async () => {
+        const currentUser = get().user;
+        if (currentUser) {
+            try {
+                await get().fetchUserInfo(currentUser.id);
+            } catch (error) {
+                console.error("Error updating user data:", error);
+            }
+        }
+    },
+    
     signup: async (email, password, userData) => {
         set({ loading: true, isSigningUp: true });
         try {
