@@ -3,6 +3,8 @@
   https://www.joshwcomeau.com/css/custom-css-reset/
 */
 
+@import "tailwindcss";
+/* 
 *,
 *::before,
 *::after {
@@ -72,7 +74,7 @@ h6 {
     padding: 0;
     font-family: "Lucida Sans", "Lucida Sans Regular Lucida Grande",
         "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
-}
+} */
 
 body {
     background-image: url("/bg.jpg");
