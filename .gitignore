@@ -24,3 +24,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+
+# Markdown files
+implementation-summary.md
+mobile-responsive-strategy.md
+responsive-analysis-report.md
