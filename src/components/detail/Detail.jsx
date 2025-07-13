@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";
 import "./detail.css";
 import { useChatStore } from "../../hooks/useChatStore";
@@ -5,12 +6,27 @@ import { useUserStore } from "../../hooks/useUserStore";
 import { doc, updateDoc, arrayRemove, arrayUnion } from "firebase/firestore";
 import { db } from "../../lib/firebase";
 export default function Detail() {
+    // const [language, setLanguage] = useState("English");
     const { user, logout } = useAuth();
     const { updateUserData } = useUserStore();
     const {receiver, isCurrentUserBlocked, isReceiverBlocked, refreshBlockingStates} = useChatStore();
 
     function handleLogout() {
         logout();
+    }
+
+    async function handleLanguageChange(e) {
+        try {
+        const updatedLanguage = e.target.value;
+        // setLanguage(updatedLanguage);
+        const userDocRef = doc(db, "users", user.id);
+        await updateDoc(userDocRef, {
+            language: updatedLanguage
+        });
+        await updateUserData();
+    } catch(err){
+        console.log(err);
+    }
     }
 
     async function handleBlock() {
@@ -42,12 +58,12 @@ export default function Detail() {
                     <p>{isCurrentUserBlocked || isReceiverBlocked ? "Bio not available" : receiver?.bio || "Lorem ipsum dolor sit amet."}</p>
                 </div>
                 <div className="info">
-                    <div className="option">
+                    {/* <div className="option">
                         <div className="title">
                             <span>Chat Settings</span>
                             <img src="./arrowUp.png" alt="" />
                         </div>
-                    </div>
+                    </div> */}
                     {/* <div className="option">
                         <div className="title">
                             <span>Privacy & help</span>
@@ -129,6 +145,23 @@ export default function Detail() {
                         </div>
                     </div> */}
                     <button className="" onClick={handleBlock}>{isReceiverBlocked ? "Unblock User" : "Block User"}</button>
+                    <label htmlFor="language">Change Language:</label>
+                        <select id="language" name="language" value={user.language} onChange={handleLanguageChange}>
+                            <option value="English">English (Default)</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="Telugu">Telugu</option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="Marathi">Marathi</option>
+                            <option value="Garhwali">Garhwali</option>
+                            <option value="Gujarati">Gujarati</option>
+                            <option value="Kannada">Kannada</option>
+                            <option value="Malayalam">Malayalam</option>
+                            <option value="Odia">Odia</option>
+                            <option value="Punjabi">Punjabi</option>
+                            <option value="Urdu">Urdu</option>
+                            <option value="Bengali">Bengali</option>
+                            
+                        </select>
                     <button className="logout" onClick={handleLogout}>
                         Logout
                     </button>
