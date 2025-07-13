@@ -15,9 +15,9 @@ const geminiApiKey = defineSecret("GEMINI_API_KEY");
 async function translate(text, targetLanguage) {
     try {
         const genAI = new GoogleGenerativeAI(geminiApiKey.value());
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-        const prompt = `Translate the following text to ${targetLanguage}. Return only the translated text without any additional formatting or explanations:\n\n${text}`;
+        const prompt = `Your are a worldclass language translator, now analyse the message in triple quotes and convert it into ${targetLanguage}, keeping the same tone . Conversation is happening over a whatsapp like chat app. You don't need to convert it word by word but by understanding the context of the complete message and what the sender wants to speak through that. For example : If it's like in Hindi "Aur bhai kya chal raha", then in english it should be like "Hey bro, what's going on ?" or similar. Tone and formality of the message should remain same, if it's a formal tone then keep it that way, if it's a little informal then that and if it's casual between friends then that. One more thing provide the reply using english alphabets only if it's indian language like if i am sending "Hey bro what's app" and response is set to hindi, tamil or any other, for example hindi then istead of returning message in hindi, return it in hinglish tone like "Aur bhai kya chal raha ", that whatsapp tone .In case of any non indian languages use their alphabets and grammer, keeping the whatsapp tone . If things such "ji" or something is there understand the context and then keep it or remove it, like sometime it's for fun like "Hello Ji" and sometime it's for respect, so based on that modify it .If it seems like a close friend convo you can use words that implies that where needed, not in any random place, like if it's between two close friends and the message is telugu maybe use 'ra' where apt, again not necessarily everywhere. Message: """${text}"""`;
 
         const result = await model.generateContent(prompt);
         const response = await result.response;
