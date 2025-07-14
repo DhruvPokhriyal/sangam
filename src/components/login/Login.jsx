@@ -13,7 +13,7 @@ export default function Login() {
         file: null,
         url: "",
     });
-    const [language, setLanguage] = useState("en");
+    const [language, setLanguage] = useState("English");
 
     const handleAvatar = useCallback(function handleAvatar(e) {
         if (e.target.files[0])
@@ -130,47 +130,25 @@ export default function Login() {
                         onChange={(e) => setLanguage(e.target.value)}
                         className="w-full px-5 py-4 border-none outline-none bg-slate-800/60 text-white rounded-md focus:bg-slate-800/80 focus:ring-2 focus:ring-blue-500 transition-all duration-200"
                     >
-                        <option value="en">English</option>
-                        <option value="hi">Hindi</option>
-                        <option value="es">Spanish</option>
-                        <option value="fr">French</option>
-                        <option value="de">German</option>
-                        <option value="it">Italian</option>
-                        <option value="pt">Portuguese</option>
-                        <option value="ru">Russian</option>
-                        <option value="ja">Japanese</option>
-                        <option value="ko">Korean</option>
-                        <option value="zh">Chinese</option>
-                        <option value="ar">Arabic</option>
-                        <option value="tr">Turkish</option>
-                        <option value="pl">Polish</option>
-                        <option value="nl">Dutch</option>
-                        <option value="sv">Swedish</option>
-                        <option value="da">Danish</option>
-                        <option value="no">Norwegian</option>
-                        <option value="fi">Finnish</option>
-                        <option value="cs">Czech</option>
-                        <option value="hu">Hungarian</option>
-                        <option value="ro">Romanian</option>
-                        <option value="bg">Bulgarian</option>
-                        <option value="hr">Croatian</option>
-                        <option value="sk">Slovak</option>
-                        <option value="sl">Slovenian</option>
-                        <option value="et">Estonian</option>
-                        <option value="lv">Latvian</option>
-                        <option value="lt">Lithuanian</option>
-                        <option value="mt">Maltese</option>
-                        <option value="ga">Irish</option>
-                        <option value="cy">Welsh</option>
-                        <option value="eu">Basque</option>
-                        <option value="ca">Catalan</option>
-                        <option value="gl">Galician</option>
-                        <option value="is">Icelandic</option>
-                        <option value="mk">Macedonian</option>
-                        <option value="sq">Albanian</option>
-                        <option value="sr">Serbian</option>
-                        <option value="bs">Bosnian</option>
-                        <option value="me">Montenegrin</option>
+                        <option value="English">English (Default)</option>
+                            <option value="Hindi">Hindi</option>
+                            <option value="Telugu">Telugu</option>
+                            <option value="Tamil">Tamil</option>
+                            <option value="Marathi">Marathi</option>
+                            <option value="Gujarati">Gujarati</option>
+                            <option value="Kannada">Kannada</option>
+                            <option value="Malayalam">Malayalam</option>
+                            <option value="Odia">Odia</option>
+                            <option value="Punjabi">Punjabi</option>
+                            <option value="Urdu">Urdu</option>
+                            <option value="Bengali">Bengali</option>
+                            <option value="Spanish">Spanish</option>
+                            <option value="French">French</option>
+                            <option value="German">German</option>
+                            <option value="Italian">Italian</option>
+                            <option value="Portuguese">Portuguese</option>
+                            <option value="Russian">Russian</option>
+                            <option value="Turkish">Turkish</option>
                     </select>
                     <button 
                         disabled={loading}
