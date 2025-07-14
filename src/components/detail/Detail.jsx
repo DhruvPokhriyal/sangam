@@ -107,6 +107,7 @@ export default function Detail({ className = "", onClose, isMobile = false }) {
                                 >
                                     <option value="English">English (Default)</option>
                             <option value="Hindi">Hindi</option>
+                            <option value="Garhwali">Garhwali</option>
                             <option value="Telugu">Telugu</option>
                             <option value="Tamil">Tamil</option>
                             <option value="Marathi">Marathi</option>
